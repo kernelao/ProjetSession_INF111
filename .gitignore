@@ -1,0 +1,24 @@
+### IntelliJ IDEA ###
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+# Ignorer les fichiers de compilation
+*.class
+
+# Ignorer les fichiers spécifiques à IntelliJ IDEA
+/.idea/
+/*.iml
+
+# Ignorer les fichiers système Mac
+.DS_Store
+
+# Fichiers système Windows
+Thumbs.db
+Desktop.ini
+
+# Ignorer les fichiers de build
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+
