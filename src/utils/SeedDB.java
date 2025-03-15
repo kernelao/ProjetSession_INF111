@@ -1,11 +1,11 @@
-package baseDonnees.utils;
+package utils;
 
 /**
- * Cette méthode offre le service de remplissage d'une base de données.
+ * Cette mï¿½thode offre le service de remplissage d'une base de donnï¿½es.
  * Elle ajoute des utilisateurs et des transactions.
  * 
  * Services publiques:
- * - seed, remplir une base de données
+ * - seed, remplir une base de donnï¿½es
  * 
  * @author Fred Simard | ETS
  * @version Hiver 2025
@@ -14,8 +14,8 @@ package baseDonnees.utils;
 public class SeedDB {
 
 	/**
-	 * méthode pour remplir une base de données
-	 * @param bd la base de donnée à remplir
+	 * mï¿½thode pour remplir une base de donnï¿½es
+	 * @param bd la base de donnï¿½e ï¿½ remplir
 	 */
 	/*
 	public static void seed(BaseDonnees bd) {
@@ -25,8 +25,8 @@ public class SeedDB {
 	
 
 	/**
-	 * méthode pour remplir les utilisateurs
-	 * @param bd la base de donnée à remplir
+	 * mï¿½thode pour remplir les utilisateurs
+	 * @param bd la base de donnï¿½e ï¿½ remplir
 	 */
 	/*
 	private static void ajouterLesUtilisateurs(BaseDonnees bd) {
@@ -50,8 +50,8 @@ public class SeedDB {
 	
 
 	/**
-	 * méthode pour remplir les transactions
-	 * @param bd la base de donnée à remplir
+	 * mï¿½thode pour remplir les transactions
+	 * @param bd la base de donnï¿½e ï¿½ remplir
 	 */
 	/*
 	private static  void ajouterLesTransactions(BaseDonnees bd) {

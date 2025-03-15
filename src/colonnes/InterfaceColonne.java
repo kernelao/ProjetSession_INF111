@@ -1,8 +1,8 @@
-package baseDonnees.bases;
+package colonnes;
 
 /**
- * Cette interface spécifie les méthodes publique des colonnes d'une base de données.
- * 
+ * Cette interface spÃ©cifie les mÃ©thodes publique des colonnes d'une base de donnÃ©es.
+ *
  * Services publiques:
  * 	- ajouterValeur
  * 	- obtenirValeur
@@ -10,7 +10,7 @@ package baseDonnees.bases;
  * 	- changerValeur
  * 	- getNbElements
  * 	- afficherContenu
- * 
+ *
  * @author Fred Simard | ETS
  * @version Hiver 2025
  *
@@ -20,43 +20,43 @@ package baseDonnees.bases;
 public interface InterfaceColonne<V> {
 
 	/**
-	 * ajoute une valeur à la colonne
-	 * @param valeur valeur à ajouter
+	 * ajoute une valeur Ã  la colonne
+	 * @param valeur valeur Ã  ajouter
 	 */
 	public abstract void ajouterValeur(V valeur);
-	
+
 	/**
-	 * obtient, sans retirer, une valeur de la colonne 
+	 * obtient, sans retirer, une valeur de la colonne
 	 * @param index index de la valeur
 	 * @return la valeur
-	 * @throws Exception lève une exception si index invalide
+	 * @throws Exception lÃ¨ve une exception si index invalide
 	 */
 	public abstract V obtenirValeur(int index) throws Exception;
-	
+
 	/**
-	 * obtient l'index de la valeur demandé, ou -1 si non présent
-	 * @param valeur valeur demandé
+	 * obtient l'index de la valeur demandÃ©, ou -1 si non prÃ©sent
+	 * @param valeur valeur demandÃ©
 	 * @return index de la valeur
 	 */
 	public abstract int obtenirIndex(V valeur);
-	
+
 	/**
 	 * remplace une valeur dans la colonne
-	 * @param index index de la valeur à remplacer
-	 * @param valeur valeur à insérer
-	 * @throws Exception lève une exception si index invalide
+	 * @param index index de la valeur Ã  remplacer
+	 * @param valeur valeur Ã  insÃ©rer
+	 * @throws Exception lÃ¨ve une exception si index invalide
 	 */
 	public abstract void changerValeur(int index, V valeur) throws Exception;
-	
+
 	/**
-	 * retourne le nombre d'élément dans la colonne
-	 * @return le nombre d'élément dans la colonne
+	 * retourne le nombre d'Ã©lÃ©ment dans la colonne
+	 * @return le nombre d'Ã©lÃ©ment dans la colonne
 	 */
 	public abstract int getNbElements();
 
 	/**
-	 * affiche le contenu de la colonne (déverminage)
+	 * affiche le contenu de la colonne (dÃ©verminage)
 	 */
 	public abstract void afficherContenu();
-	
+
 }

@@ -1,13 +1,13 @@
 package baseDonnees.bases;
 
 /**
- * Ce fichier implémente la colonne indexée qui utilise la fouille binaire comme
- * technique de recherche. Il s'agit d'une classe dérivé de colonne.
- * 
- * La description des requis se trouve dans l'énoncé du devoir, section 2.3.
- * 
+ * Ce fichier implÃ©mente la colonne indexÃ©e qui utilise la fouille binaire comme
+ * technique de recherche. Il s'agit d'une classe dÃ©rivÃ© de colonne.
+ *
+ * La description des requis se trouve dans l'Ã©noncÃ© du devoir, section 2.3.
+ *
  * La classe interne ValIndexee est fournie.
- * 
+ *
  * @author Fred Simard | ETS
  * @version Hiver 2025
  *

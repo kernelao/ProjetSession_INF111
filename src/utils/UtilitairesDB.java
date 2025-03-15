@@ -1,12 +1,12 @@
-package baseDonnees.utils;
+package utils;
 
 /**
- * Ce fichier contient deux méthodes offrant des services pour la gestion sécuritaire
- * du mot de passe. La stratégie employé est celle du salage.
+ * Ce fichier contient deux mï¿½thodes offrant des services pour la gestion sï¿½curitaire
+ * du mot de passe. La stratï¿½gie employï¿½ est celle du salage.
  * 
  * Services publiques:
  * - obtenirSalt, obtenir un salt
- * - hashMotDePasse, hâcher le mot de passe
+ * - hashMotDePasse, hï¿½cher le mot de passe
  * 
  * @author Fred Simard | ETS
  * @version Hiver 2025
@@ -27,7 +27,7 @@ public class UtilitairesDB {
 	protected static SecureRandom random = new SecureRandom();
 
 	/**
-	 * méthode retournant un salt.
+	 * mï¿½thode retournant un salt.
 	 * @return salt dans un tableau de byte
 	 */
 	public static byte[] obtenirSalt() {
@@ -37,7 +37,7 @@ public class UtilitairesDB {
 	}
 
 	/**
-	 * méthode qui hash le mot de passe et le salt
+	 * mï¿½thode qui hash le mot de passe et le salt
 	 * @param motDePasse mot de passe a sauvegarder
 	 * @param salt salt a utiliser
 	 * @return hash du mot de passe sous forme d'un tableau de byte
