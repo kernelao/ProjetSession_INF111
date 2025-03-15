@@ -1,18 +1,18 @@
 import modeles.Transaction;
 import modeles.Utilisateur;
 import utils.UtilitairesDB;
-import utils.SeedDB;
+import colonnes.Colonne;
 
 import java.util.ArrayList;
 import java.util.Vector;
 import java.util.ListIterator;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
         // testerUtilisateur();
         // testerTransaction();
-
+        // testerColonne();
 
     }
 
@@ -61,4 +61,28 @@ public class Main {
         }
     }
 
+    public static void testerColonne() throws Exception {
+
+        Colonne<Utilisateur> colonneUtilisateur = new Colonne<Utilisateur>();
+
+        Utilisateur user1 = new Utilisateur("Bob", "Bille", "001", 0);
+        Utilisateur user2 = new Utilisateur("Carl", "Bille", "002", 0);
+        Utilisateur user3 = new Utilisateur("Jane", "Las", "003", 40);
+
+        colonneUtilisateur.ajouterValeur(user1);
+        colonneUtilisateur.ajouterValeur(user2);
+        colonneUtilisateur.afficherContenu();
+
+        System.out.println(colonneUtilisateur.obtenirValeur(1));
+        System.out.println(colonneUtilisateur.obtenirValeur(0));
+        System.out.println(colonneUtilisateur.obtenirIndex(user2));
+        System.out.println(colonneUtilisateur.obtenirIndex(user1) + "\n");
+
+        System.out.println(colonneUtilisateur.getNbElements() + "\n");
+
+        colonneUtilisateur.changerValeur(1, user3);
+        colonneUtilisateur.afficherContenu();
+
+
+    }
 }
