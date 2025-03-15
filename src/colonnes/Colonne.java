@@ -1,48 +1,90 @@
 package colonnes;
-import java.util.ArrayList;
 
 public class Colonne<V> implements InterfaceColonne<V> {
 
-    private ArrayList<V> liste;
+    /*
+     * Implémenter d'un type de données abstrait avec une approche statique
+     * Donc, on utilise un tableau contigue V[] (fixe) qu'on redimensionne au préalable
+     * */
 
-    // Constructeur
-    public Colonne() {this.liste = new ArrayList<V>();}
+    // Constantes
+    public static final int CAPACITE_INITIALE_PAR_DEFAUT = 15;
+
+    // Attributs
+    private V[] liste;
+    private int tailleActuelle; // On aurait pu utiliser liste.length, mais on choisit d'utiliser un attribut propre pour cela
+    private int capaciteActuelle;
+
+    // Constructeur avec capacité initiale et un autre sans argument
+    public Colonne(int capaciteInitiale) {
+        // https://stackoverflow.com/questions/529085/how-can-i-create-a-generic-array-in-java
+        this.liste = (V[]) new Object[capaciteInitiale];
+        this.capaciteActuelle = capaciteInitiale;
+        this.tailleActuelle = 0;
+    }
+    public Colonne() {
+        // https://stackoverflow.com/questions/529085/how-can-i-create-a-generic-array-in-java
+        this.liste = (V[]) new Object[CAPACITE_INITIALE_PAR_DEFAUT];
+        this.capaciteActuelle = CAPACITE_INITIALE_PAR_DEFAUT;
+        this.tailleActuelle = 0;
+    }
 
     @Override
     public void ajouterValeur(V valeur) {
-        this.liste.add(valeur);
+
+        if (this.tailleActuelle == this.capaciteActuelle) {
+            int capaciteNouvelle = this.capaciteActuelle * 2;
+            V[] listeNouvelle = (V[]) new Object[capaciteNouvelle];
+            for (int i = 0; i < this.tailleActuelle; i++) {
+                listeNouvelle[i] = this.liste[i];
+            }
+            this.capaciteActuelle = capaciteNouvelle;
+            this.liste = listeNouvelle;
+        }
+
+        this.liste[this.tailleActuelle++] = valeur;
     }
 
     @Override
     public V obtenirValeur(int index) throws Exception {
-        if (index < 0 || index >= liste.size()) {
-            throw new Exception("Index invalide : " + index);
+        if (index < 0 || index > tailleActuelle) {
+            throw new Exception("Index invalide " + index);
         }
-        return liste.get(index);
+        return liste[index];
     }
 
     @Override
     public int obtenirIndex(V valeur) {
-        return liste.indexOf(valeur);
+        for (int i = 0; i < tailleActuelle; i++) {
+            if (liste[i].equals(valeur)) {
+                return i;
+            }
+        }
+        return -1; // Valeur non trouvée
     }
 
     @Override
     public void changerValeur(int index, V valeur) throws Exception {
-        if (index < 0 || index >= liste.size()) {
-            throw new Exception("Index invalide : " + index);
+        if (index < 0 || index > tailleActuelle) {
+            throw new Exception("Index invalide " + index);
         }
-        liste.set(index, valeur);
+        liste[index] = valeur;
     }
 
     @Override
     public int getNbElements() {
-        return liste.size();
+        return this.tailleActuelle;
+    }
+
+    // Méthodes non obligatoire, pour tester
+    public int getCapaciteActuelle() {
+        return this.capaciteActuelle;
     }
 
     @Override
     public void afficherContenu() {
-        for (V v : this.liste) {
-            System.out.println(v);
+        for (int i = 0; i < this.tailleActuelle; i++) {
+            System.out.println("Élément : " + (i+1) + "\n" + liste[i] + "\n");
         }
     }
 }

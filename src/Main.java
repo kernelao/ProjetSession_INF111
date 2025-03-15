@@ -1,17 +1,20 @@
 import modeles.Transaction;
 import modeles.Utilisateur;
 import utils.UtilitairesDB;
-import colonnes.Colonne;
+import draft.ColonneArrayList;
 
 import java.util.ArrayList;
 import java.util.Vector;
 import java.util.ListIterator;
+import colonnes.Colonne;
+
 
 public class Main {
     public static void main(String[] args) throws Exception {
 
         // testerUtilisateur();
         // testerTransaction();
+        // testerColonneArrayList();
         // testerColonne();
 
     }
@@ -61,8 +64,33 @@ public class Main {
         }
     }
 
-    public static void testerColonne() throws Exception {
+    public static void testerColonneArrayList() throws Exception {
 
+        ColonneArrayList<Utilisateur> colonneArrayListUtilisateur = new ColonneArrayList<Utilisateur>();
+
+        Utilisateur user1 = new Utilisateur("Bob", "Bille", "001", 0);
+        Utilisateur user2 = new Utilisateur("Carl", "Bille", "002", 0);
+        Utilisateur user3 = new Utilisateur("Jane", "Las", "003", 40);
+
+        colonneArrayListUtilisateur.ajouterValeur(user1);
+        colonneArrayListUtilisateur.ajouterValeur(user2);
+        colonneArrayListUtilisateur.afficherContenu();
+
+        System.out.println(colonneArrayListUtilisateur.obtenirValeur(1));
+        System.out.println(colonneArrayListUtilisateur.obtenirValeur(0));
+        System.out.println(colonneArrayListUtilisateur.obtenirIndex(user2));
+        System.out.println(colonneArrayListUtilisateur.obtenirIndex(user1) + "\n");
+
+        System.out.println(colonneArrayListUtilisateur.getNbElements() + "\n");
+
+        colonneArrayListUtilisateur.changerValeur(1, user3);
+        colonneArrayListUtilisateur.afficherContenu();
+
+
+    }
+
+    public static void testerColonne() throws Exception {
+        // Les deux classes sont presque pareil, pour respecter les contraintes, on utilise une implémentation statique sans chainage (avec tableau 1D)
         Colonne<Utilisateur> colonneUtilisateur = new Colonne<Utilisateur>();
 
         Utilisateur user1 = new Utilisateur("Bob", "Bille", "001", 0);
@@ -83,6 +111,24 @@ public class Main {
         colonneUtilisateur.changerValeur(1, user3);
         colonneUtilisateur.afficherContenu();
 
+        System.out.println(colonneUtilisateur.getNbElements());
+        System.out.println(colonneUtilisateur.getCapaciteActuelle());
+        System.out.println((colonneUtilisateur.getCapaciteActuelle() - colonneUtilisateur.getNbElements()));
+        int rajoute = colonneUtilisateur.getCapaciteActuelle() - colonneUtilisateur.getNbElements();
 
+        // Taille de 2 et capacité de 15, rajoutons encore 13 utilisateur
+        for (int i = 0; i < (rajoute); i++) {
+            colonneUtilisateur.ajouterValeur(new Utilisateur("Bob", "Bille", "001", 0));
+            System.out.println("Itération : " + i + " / " + colonneUtilisateur.getNbElements() + " / " + colonneUtilisateur.getCapaciteActuelle());
+        }
+        System.out.println(colonneUtilisateur.getNbElements());
+        System.out.println(colonneUtilisateur.getCapaciteActuelle());
+
+        // Rajoutons 1 utilisateur en plus
+        colonneUtilisateur.ajouterValeur(new Utilisateur("Bob", "Bille", "001", 0));
+        System.out.println(colonneUtilisateur.getNbElements());
+        System.out.println(colonneUtilisateur.getCapaciteActuelle());
+        // Sa fonctionne!
     }
 }
+
