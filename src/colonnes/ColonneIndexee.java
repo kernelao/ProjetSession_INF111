@@ -1,4 +1,4 @@
-package baseDonnees.bases;
+package colonnes;
 
 /**
  * Ce fichier implémente la colonne indexée qui utilise la fouille binaire comme
