@@ -11,9 +11,9 @@ public class Colonne<V> implements InterfaceColonne<V> {
     public static final int CAPACITE_INITIALE_PAR_DEFAUT = 15;
 
     // Attributs
-    private V[] liste;
-    private int tailleActuelle; // On aurait pu utiliser liste.length, mais on choisit d'utiliser un attribut propre pour cela
-    private int capaciteActuelle;
+    protected V[] liste;
+    protected int tailleActuelle; // On aurait pu utiliser liste.length, mais on choisit d'utiliser un attribut propre pour cela
+    protected int capaciteActuelle;
 
     // Constructeur avec capacité initiale et un autre sans argument
     public Colonne(int capaciteInitiale) {
@@ -33,8 +33,10 @@ public class Colonne<V> implements InterfaceColonne<V> {
     public void ajouterValeur(V valeur) {
 
         if (this.tailleActuelle == this.capaciteActuelle) {
+
             int capaciteNouvelle = this.capaciteActuelle * 2;
             V[] listeNouvelle = (V[]) new Object[capaciteNouvelle];
+
             for (int i = 0; i < this.tailleActuelle; i++) {
                 listeNouvelle[i] = this.liste[i];
             }
@@ -83,8 +85,9 @@ public class Colonne<V> implements InterfaceColonne<V> {
 
     @Override
     public void afficherContenu() {
+        System.out.println("\n Valeurs de la colonne : ");
         for (int i = 0; i < this.tailleActuelle; i++) {
-            System.out.println("Élément : " + (i+1) + "\n" + liste[i] + "\n");
+            System.out.println("Élément : " + (i+1) + " -- " + liste[i]);
         }
     }
 }

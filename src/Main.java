@@ -1,3 +1,4 @@
+import colonnes.ColonneIndexee;
 import modeles.Transaction;
 import modeles.Utilisateur;
 import utils.UtilitairesDB;
@@ -16,9 +17,8 @@ public class Main {
         // testerTransaction();
         // testerColonneArrayList();
         // testerColonne();
-
+        testerColonneIndexee();
     }
-
     public static void testerUtilisateur() {
         Vector<Utilisateur> utilisateurs = new Vector<>();
 
@@ -130,5 +130,46 @@ public class Main {
         System.out.println(colonneUtilisateur.getCapaciteActuelle());
         // Sa fonctionne!
     }
-}
 
+    public static void testerColonneIndexee() throws Exception {
+        // Utilisation de l'enveloppeur/wrapper String, puisqu'il
+        // faudrait implémenter Comparable pour la classe Utilisateur/Transaction pour permettre le tri
+        ColonneIndexee<String> colonne1 = new ColonneIndexee<String>(8);
+        ColonneIndexee<String> colonne2 = new ColonneIndexee<String>();
+
+        colonne1.ajouterValeur("Dragon");
+        colonne1.ajouterValeur("Euro");
+        colonne1.ajouterValeur("Belier");
+        colonne1.ajouterValeur("Arold");
+        colonne1.ajouterValeur("Euro");
+        colonne1.ajouterValeur("Gerald");
+        colonne1.ajouterValeur("File");
+
+        colonne1.afficherContenu();
+        System.out.println("Nombre d'éléments : " + colonne1.getNbElements());
+        System.out.println("Espace restant : " + (colonne1.getCapaciteActuelle() - colonne1.getNbElements()));
+
+        // On rajoute 1 puis le deuxieme
+        colonne1.ajouterValeur("Harold");
+        System.out.println("Nombre d'éléments : " + colonne1.getNbElements());
+        System.out.println("Espace restant : " + (colonne1.getCapaciteActuelle() - colonne1.getNbElements()));
+
+        colonne1.ajouterValeur("John");
+        System.out.println("Nombre d'éléments : " + colonne1.getNbElements());
+        System.out.println("Capacité après ajout du 8ème (dépassement) : " + (colonne1.getCapaciteActuelle()));
+
+        System.out.println("Index de \"Euro\" : " + colonne1.obtenirIndex("Euro") + " / Attendu : 2");
+        System.out.println("Index de \"Belier\" : " + colonne1.obtenirIndex("Belier") + " / Attendu : 1");
+        System.out.println("Index de \"Gerald\" : " + colonne1.obtenirIndex("Gerald") + " / Attendu : 6");
+        System.out.println("Index de \"Arold\" : " + colonne1.obtenirIndex("Arold") + " / Attendu : 0");
+        System.out.println("Index de \"Harold\" : " + colonne1.obtenirIndex("Harold") + " / Attendu : 7");
+
+        // Fonctionne
+        // colonne1.changerValeur(1, "Bob");
+
+        System.out.println("estUnique de \"Euro\" : " + colonne1.estUnique("Euro") + " / Attendu : faux");
+        System.out.println("estUnique de \"Belier\" : " + colonne1.estUnique("Belier") + " / Attendu : vrai");
+        System.out.println("estUnique de \"Gerald\" : " + colonne1.estUnique("Gerald") + " / Attendu : vrai");
+
+    }
+}
