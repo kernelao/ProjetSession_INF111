@@ -24,12 +24,13 @@ public class ColonneIndexee<E extends Comparable<E>> extends Colonne<E> {
     // Attributs
     private ValIndexee[] valIndexee;
 
+
     // Système d'indexation
 	private class ValIndexee<E extends Comparable<E>> {
-		
+
 		public int index;
 		public E valeur;
-		
+
 		public ValIndexee(int index, E valeur2) {
 			this.index = index;
 			this.valeur = valeur2;
@@ -50,10 +51,38 @@ public class ColonneIndexee<E extends Comparable<E>> extends Colonne<E> {
         this.valIndexee = new ValIndexee[CAPACITE_INITIALE_PAR_DEFAUT];
     }
 
+    // Méthode pour ajouter une valeur. On ajoute la valeur dans un tableau hérité de la Colonne
+    //
+    @Override
+    public void ajouterValeur(E valeur) {
+
+        // Ici on vient chercher le nombre d'élément actuelle, = indice oû sera stocké la nouvelle valeur
+        // Classe hérité, donc au niveau de la colonne, super s'en occupe
+        int index = super.getNbElements();
+        super.ajouterValeur(valeur);
+
+        // Valider/ajuster la taille du tableau valIndexee
+        validerTailleTableau();
+
+        // Sous-méthode pour trouver la position d'insertion avec une fouille linéaire (contrainte)
+        int position = trouverPositionInsertion(valeur);
+
+        // Décaler les éléments pour insérer la valeur à la bonne position
+        for (int i = this.nbElements; i > position; i--) {
+            this.valIndexee[i] = this.valIndexee[i - 1];
+        }
+
+        // Insérer la nouvelle valeur indexée
+        valIndexee[position] = new ValIndexee<>(index, valeur);
+        this.nbElements++;
+    }
+
+
+
     // Vérifie si une valeur est unique
     public boolean estUnique(E valeur) {
         int debut = 0;
-        int fin = tailleActuelle - 1;
+        int fin = this.nbElements - 1;
 
         while (debut <= fin) {
             int milieu = (debut + fin) / 2;
@@ -77,61 +106,10 @@ public class ColonneIndexee<E extends Comparable<E>> extends Colonne<E> {
     }
 
     @Override
-    public void ajouterValeur(E valeur) {
-
-        // Ici on vient chercher le nombre d'élément actuelle, = indice oû sera stocké la nouvelle valeur
-        // Classe hérité, donc au niveau de la colonne, super s'en occupe
-        int index = super.getNbElements();
-        super.ajouterValeur(valeur);
-
-        // Redimensionner de valIndexee
-        if (this.tailleActuelle == this.valIndexee.length) {
-
-            int capaciteNouvelle = this.valIndexee.length * 2;
-            ValIndexee[] nouveauTableau = new ValIndexee[capaciteNouvelle];
-
-            for (int i = 0; i < valIndexee.length; i++) {
-                nouveauTableau[i] = this.valIndexee[i];
-            }
-            this.valIndexee = nouveauTableau;
-        }
-
-        // Méthode pour trouver la position d'insertion (fouille binaire/dichotomique)
-        int debut = 0;
-        int fin = this.tailleActuelle - 1;
-        int position = 0;
-
-        while (debut <= fin) {
-            int milieu = (debut + fin) / 2;
-
-            if (this.valIndexee[milieu] == null) {
-                fin = milieu - 1;
-            } else {
-                int comparaison = this.valIndexee[milieu].comparer(valeur);
-
-                if (comparaison < 0) {
-                    debut = milieu + 1;
-                } else {
-                    fin = milieu - 1;
-                }
-            }
-        }
-        position = debut;
-
-        // Décaler les éléments pour insérer la valeur à la bonne position
-        for (int i = this.tailleActuelle; i > position; i--) {
-            this.valIndexee[i] = this.valIndexee[i - 1];
-        }
-
-        // Insérer la nouvelle valeur indexée
-        valIndexee[position] = new ValIndexee<>(index, valeur);
-    }
-
-    @Override
     public int obtenirIndex(E valeur) {
         boolean trouvee = false;
         int debut = 0;
-        int fin = tailleActuelle - 1;
+        int fin = nbElements - 1;
         int milieu = -1;
 
         while (debut <= fin && !trouvee) {
@@ -163,9 +141,10 @@ public class ColonneIndexee<E extends Comparable<E>> extends Colonne<E> {
     @Override
     public void afficherContenu() {
         System.out.println("Paires index/valeurs : ");
-        for (int i = 0; i < tailleActuelle; i++) {
-            System.out.println("Index : " + this.valIndexee[i].index + " / Valeur : "
-                    + this.valIndexee[i].valeur);
+        for (int i = 0; i < this.nbElements; i++) {
+            if (this.valIndexee[i] != null) {
+                System.out.println("Index : " + this.valIndexee[i].index + " / Valeur : " + this.valIndexee[i].valeur);
+            }
         }
         super.afficherContenu();
     }
@@ -174,4 +153,60 @@ public class ColonneIndexee<E extends Comparable<E>> extends Colonne<E> {
     public void changerValeur(int index, E valeur) throws Exception {
         throw new UnsupportedOperationException("changerValeur() n'est pas supporté dans ColonneIndexee.");
     }
-}
+
+    // Sous-méthode pour vérifier/agrandir tableau si besoin
+    private void validerTailleTableau() {
+        if (this.nbElements >= this.valIndexee.length) {
+            this.capaciteActuelle = this.valIndexee.length * 2;
+            ValIndexee[] nouveauTableau = new ValIndexee[this.capaciteActuelle];
+            int compteur = 0;
+            for (int i = 0; i < this.valIndexee.length; i++) {
+                nouveauTableau[i] = this.valIndexee[i];
+                compteur++;
+            }
+            this.valIndexee = nouveauTableau;
+            this.nbElements = compteur;
+        }
+    }
+
+    // Sous-méthode appelée par ajouterValeur pour trouver position d'insertion avec fouille linéaire
+    private int trouverPositionInsertion(E valeur) {
+        int position = 0;
+
+        while (position < this.nbElements && valIndexee[position] != null) {
+            if (this.valIndexee[position].valeur.compareTo(valeur) > 0) {
+                break;
+            }
+            position++;
+        }
+        return position;
+    }
+
+    // Sous-méthode appelée par ajouterValeur pour trouver position d'insertion avec fouille linéaire
+    private int rechercheBinaire(E valeur) {
+        int debut = 0;
+        int fin = this.nbElements - 1;
+        int milieu = -1;
+        boolean trouvee = false;
+        while (debut <= fin && !trouvee) {
+            milieu = (debut + fin) / 2;
+
+            if (valIndexee[milieu] == null) {
+                return ELEMENT_ABSENT; // gestion exception ICI
+            }
+
+            int comparaison = this.valIndexee[milieu].valeur.compareTo(valeur);
+
+            if (comparaison == 0) {
+                return milieu; // La valeur existe déjà dans `valIndexee`
+            } else if (comparaison < 0) {
+                debut = milieu + 1; // Chercher à droite
+            } else {
+                fin = milieu - 1; // Chercher à gauche
+            }
+        }
+
+        return -1;
+        }
+    }
+

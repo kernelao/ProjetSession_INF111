@@ -20,10 +20,10 @@ public class Main {
         // testerTransaction();
         // testerColonneArrayList();
         // testerColonne();
-        testerColonneIndexee();
+        // testerColonneIndexee();
         //testerTableUtilisateurs();
         //testerTableTransactions();
-        //testerPerformanceColonnes();
+        testerPerformanceColonnes();
         //testerBaseDonnees();
     }
     public static void testerUtilisateur() {
@@ -104,10 +104,13 @@ public class Main {
         Utilisateur user2 = new Utilisateur("Carl", "Bille", "002", 0);
         Utilisateur user3 = new Utilisateur("Jane", "Las", "003", 40);
 
+        // On test si l'ajout fonctionne
         colonneUtilisateur.ajouterValeur(user1);
         colonneUtilisateur.ajouterValeur(user2);
+        // On test l'affichage
         colonneUtilisateur.afficherContenu();
 
+        // On test obtenirValeur et obtenirIndex
         System.out.println(colonneUtilisateur.obtenirValeur(1));
         System.out.println(colonneUtilisateur.obtenirValeur(0));
         System.out.println(colonneUtilisateur.obtenirIndex(user2));
@@ -123,7 +126,8 @@ public class Main {
         System.out.println((colonneUtilisateur.getCapaciteActuelle() - colonneUtilisateur.getNbElements()));
         int rajoute = colonneUtilisateur.getCapaciteActuelle() - colonneUtilisateur.getNbElements();
 
-        // Taille de 2 et capacité de 15, rajoutons encore 13 utilisateur
+        // On test la gestion du dynamisme
+        // Taille de 2 et capacité de 15, rajoutons encore 13 utilisateurs
         for (int i = 0; i < (rajoute); i++) {
             colonneUtilisateur.ajouterValeur(new Utilisateur("Bob", "Bille", "001", 0));
             System.out.println("Itération : " + i + " / " + colonneUtilisateur.getNbElements() + " / " + colonneUtilisateur.getCapaciteActuelle());
