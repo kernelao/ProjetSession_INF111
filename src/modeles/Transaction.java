@@ -44,5 +44,14 @@ public class Transaction {
     // Mutateur
     public void setStatut(String statut) {this.statut = statut;}
 
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "Compte Source='" + noCompteSource + '\'' +
+                ", Compte Destination='" + noCompteDestination + '\'' +
+                ", Montant=" + montant +
+                ", Statut='" + statut + '\'' +
+                '}';
+    }
 
 }
