@@ -1,44 +1,46 @@
-package utils;
+package baseDonnees.utils;
+
+import baseDonnees.BaseDonnees;
+import baseDonnees.modeles.Transaction;
+import baseDonnees.modeles.Utilisateur;
 
 /**
- * Cette mï¿½thode offre le service de remplissage d'une base de donnï¿½es.
- * Elle ajoute des utilisateurs et des transactions.
+ * Module utilitaire qui permet d'initialiser la base de données
  * 
- * Services publiques:
- * - seed, remplir une base de donnï¿½es
- * 
- * @author Fred Simard | ETS
- * @version Hiver 2025
- * @ref https://www.baeldung.com/java-password-hashing
+ * @author Frédéric simard | ETS
+ * @version A2020
+ * @revision et commentaire Pierre Bélisle
+ *
  */
 public class SeedDB {
 
 	/**
-	 * mï¿½thode pour remplir une base de donnï¿½es
-	 * @param bd la base de donnï¿½e ï¿½ remplir
+	 * Méthode permettant d'ajouter les données à la base de données
+	 * @param bd
 	 */
-	/*
 	public static void seed(BaseDonnees bd) {
+		// les utilisateurs d'abord
 		ajouterLesUtilisateurs(bd);
+		// les transactions ensuite
 		ajouterLesTransactions(bd);
-	}*/
-	
+	}
 
 	/**
-	 * mï¿½thode pour remplir les utilisateurs
-	 * @param bd la base de donnï¿½e ï¿½ remplir
+	 * Méthode permettant d'ajouter les utilisateurs
+	 * @param bd
 	 */
-	/*
 	private static void ajouterLesUtilisateurs(BaseDonnees bd) {
 		
+		// Table d'information
 		Object[][] utilisateurs = {
-				{"Fred Simard","fred12", "00-150-001", new Double(1500.0)},
-				{"Pierre Belisle","pier12", "00-150-002", new Double(1500.0)},
+				{"Fred","fred12", "00-150-001", new Double(1500.0)},
+				{"o","o", "00-150-002", new Double(1500.0)},
 				{"Jimmy Parent","jim12", "00-150-003", new Double(1500.0)},
 				{"Claudia Marcy","clau12", "00-150-004", new Double(1500.0)},
 				{"Lily Jacques","lil12", "00-150-005", new Double(1500.0)}
 				};
 		
+		// ajoute tous les utilisateurs
 		for(Object[] utilisateur : utilisateurs) {
 			bd.ajouterUtilisateur(new Utilisateur((String)utilisateur[0], 
 												  (String)utilisateur[1],
@@ -46,16 +48,15 @@ public class SeedDB {
 												  (double)utilisateur[3]));
 		}
 		
-	}*/
+	}
 	
-
 	/**
-	 * mï¿½thode pour remplir les transactions
-	 * @param bd la base de donnï¿½e ï¿½ remplir
+	 * Méthode permettant d'ajouter les transactions
+	 * @param bd
 	 */
-	/*
 	private static  void ajouterLesTransactions(BaseDonnees bd) {
 
+		// Table d'information
 		Object[][] transactions = {
 				{"00-150-001","00-150-002", new Double(150.0),Transaction.ACCEPTE},
 				{"00-150-003","00-150-002", new Double(150.0),Transaction.ACCEPTE},
@@ -66,7 +67,8 @@ public class SeedDB {
 				{"00-150-003","00-150-001", new Double(150.0),Transaction.ACCEPTE},
 				{"00-150-005","00-150-001", new Double(150.0),Transaction.ACCEPTE}
 				};
-		
+
+		// ajoute toutes les transactions
 		for(Object[] transaction : transactions) {
 			bd.ajouterTransaction(new Transaction((String)transaction[0],
 												  (String)transaction[1],
@@ -74,5 +76,4 @@ public class SeedDB {
 												  (String)transaction[3]));
 		}
 	}
-	*/
 }
