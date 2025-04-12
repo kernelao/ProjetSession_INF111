@@ -8,6 +8,6 @@ public class ProgrammePrincipal {
 
 	public static void main(String[] args) {
 		
-		//SwingUtilities.invokeLater(new GestionnaireVue());
+		SwingUtilities.invokeLater(new GestionnaireVue());
 	}
 }
