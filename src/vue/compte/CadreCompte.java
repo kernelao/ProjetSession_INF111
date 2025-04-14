@@ -137,7 +137,10 @@ public class CadreCompte extends JFrame {
         boutonTransaction.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                DialogTransaction dialog = new DialogTransaction(CadreCompte.this);
+                dialog.setVisible(true);
 
+                majInfos();
             }
         });
     }
