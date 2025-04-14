@@ -2,9 +2,6 @@ package vue.compte;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import modele.Banque;
 
 public class DialogTransaction extends JDialog {
 
@@ -19,7 +16,7 @@ public class DialogTransaction extends JDialog {
         setLocationRelativeTo(parent);
         setLayout(new BorderLayout());
 
-        // panneau principal
+        // ====== PANEL PRINCIPAL ======
         Color grisPale = new Color(240, 240, 240);
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setBackground(grisPale);
@@ -27,7 +24,7 @@ public class DialogTransaction extends JDialog {
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // label Compte (2 lignes)
+        // ====== Label Compte (2 lignes) ======
         JPanel panelLabelCompte = new JPanel(new GridLayout(2, 1));
         panelLabelCompte.setBackground(grisPale);
         panelLabelCompte.add(new JLabel("Compte destination"));
@@ -37,24 +34,24 @@ public class DialogTransaction extends JDialog {
         gbc.gridy = 0;
         panel.add(panelLabelCompte, gbc);
 
-        // champ Compte
+        // ====== Champ Compte ======
         champCompteDestination = new JTextField(15);
         gbc.gridx = 1;
         gbc.gridy = 0;
         panel.add(champCompteDestination, gbc);
 
-        // label Montant
+        // ====== Label Montant ======
         gbc.gridx = 0;
         gbc.gridy = 1;
         panel.add(new JLabel("Montant:"), gbc);
 
-        // champ Montant
+        // ====== Champ Montant ======
         champMontant = new JTextField(15);
         gbc.gridx = 1;
         gbc.gridy = 1;
         panel.add(champMontant, gbc);
 
-        // boutons
+        // ====== Boutons ======
         JPanel panelBoutons = new JPanel();
         boutonAnnuler = new JButton("Annuler");
         boutonConfirmer = new JButton("Confirmer");
@@ -64,42 +61,16 @@ public class DialogTransaction extends JDialog {
 
         add(panel, BorderLayout.CENTER);
         add(panelBoutons, BorderLayout.SOUTH);
+    }
 
-        // événements
-        boutonAnnuler.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose(); // ferme la fenêtre
-            }
-        });
+    // ====== Méthodes pour le contrôleur ======
 
-        boutonConfirmer.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String compte = champCompteDestination.getText().trim();
-                String montantTexte = champMontant.getText().trim();
+    public JButton getBoutonConfirmer() {
+        return boutonConfirmer;
+    }
 
-                try {
-                    double montant = Double.parseDouble(montantTexte);
-                    boolean succes = Banque.getInstance().traiterTransaction(compte, montant);
-
-                    if (succes) {
-                        JOptionPane.showMessageDialog(DialogTransaction.this,
-                                "Transaction effectuée avec succès !");
-                        dispose();
-                    } else {
-                        JOptionPane.showMessageDialog(DialogTransaction.this,
-                                "Transaction refusée. Vérifiez les informations.",
-                                "Erreur", JOptionPane.ERROR_MESSAGE);
-                    }
-
-                } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(DialogTransaction.this,
-                            "Montant invalide. Veuillez entrer un nombre.",
-                            "Erreur", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        });
+    public JButton getBoutonAnnuler() {
+        return boutonAnnuler;
     }
 
     public String getCompteDestination() {
