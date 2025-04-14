@@ -1,6 +1,6 @@
 package vue;
 
-//import vue.compte.CadreCompte;
+import vue.compte.CadreCompte;
 import vue.connexion.CadreConnexion;
 
 /**
@@ -14,13 +14,13 @@ import vue.connexion.CadreConnexion;
 public class GestionnaireVue implements Runnable{
 	
 	CadreConnexion cadreConnexion; 
-	//CadreCompte cadreCompte;
+	CadreCompte cadreCompte;
 	
 	@Override
 	public void run() {
 		// instantie les cadres
 		cadreConnexion = new CadreConnexion(this);
-		//cadreCompte = new CadreCompte(this);
+		cadreCompte = new CadreCompte(this);
 		
 		activerModeConnexion();
 	}
@@ -30,7 +30,7 @@ public class GestionnaireVue implements Runnable{
 	 */
 	public void activerModeConnexion() {
 
-		//cadreCompte.setVisible(false);
+		cadreCompte.setVisible(false);
 		cadreConnexion.setVisible(true);
 	}
 
@@ -40,15 +40,16 @@ public class GestionnaireVue implements Runnable{
 	public void activerModeCompte() {
 
 		cadreConnexion.setVisible(false);
-		//cadreCompte.setVisible(true);
+		cadreCompte.majInfos();
+		cadreCompte.setVisible(true);
 	}
 	
 	/**
 	 * m�thode pour obtenir une r�f�rence au cadre compte
 	 * @return r�f�rence au cadre compte
 	 */
-	//public CadreCompte getCadreCompte() {
-	//	return cadreCompte;
-	//}
+	public CadreCompte getCadreCompte() {
+		return cadreCompte;
+	}
 
 }

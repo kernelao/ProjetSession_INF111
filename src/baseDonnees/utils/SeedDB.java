@@ -5,17 +5,17 @@ import baseDonnees.modeles.Transaction;
 import baseDonnees.modeles.Utilisateur;
 
 /**
- * Module utilitaire qui permet d'initialiser la base de données
+ * Module utilitaire qui permet d'initialiser la base de donnï¿½es
  * 
- * @author Frédéric simard | ETS
+ * @author Frï¿½dï¿½ric simard | ETS
  * @version A2020
- * @revision et commentaire Pierre Bélisle
+ * @revision et commentaire Pierre Bï¿½lisle
  *
  */
 public class SeedDB {
 
 	/**
-	 * Méthode permettant d'ajouter les données à la base de données
+	 * Mï¿½thode permettant d'ajouter les donnï¿½es ï¿½ la base de donnï¿½es
 	 * @param bd
 	 */
 	public static void seed(BaseDonnees bd) {
@@ -26,7 +26,7 @@ public class SeedDB {
 	}
 
 	/**
-	 * Méthode permettant d'ajouter les utilisateurs
+	 * Mï¿½thode permettant d'ajouter les utilisateurs
 	 * @param bd
 	 */
 	private static void ajouterLesUtilisateurs(BaseDonnees bd) {
@@ -37,7 +37,8 @@ public class SeedDB {
 				{"o","o", "00-150-002", new Double(1500.0)},
 				{"Jimmy Parent","jim12", "00-150-003", new Double(1500.0)},
 				{"Claudia Marcy","clau12", "00-150-004", new Double(1500.0)},
-				{"Lily Jacques","lil12", "00-150-005", new Double(1500.0)}
+				{"Lily Jacques","lil12", "00-150-005", new Double(1500.0)},
+				{"abc","def", "00-150-006", new Double(1500.0)}
 				};
 		
 		// ajoute tous les utilisateurs
@@ -51,7 +52,7 @@ public class SeedDB {
 	}
 	
 	/**
-	 * Méthode permettant d'ajouter les transactions
+	 * Mï¿½thode permettant d'ajouter les transactions
 	 * @param bd
 	 */
 	private static  void ajouterLesTransactions(BaseDonnees bd) {

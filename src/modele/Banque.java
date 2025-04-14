@@ -10,7 +10,7 @@ import observer.MonObservable;
 /**
  * La banque est l'interface de la partie dorsale du programme. Impl�ment� selon le patron
  * Lazy Singleton.
- * 
+ *
  * Elle offre les services relatifs � l'utilisateur connect� suivant:
  *  - setUtilisateurActif, pour activer un utilisateur
  *  - rafraichirUtilisateurActif, rafraichir l'information
@@ -18,11 +18,11 @@ import observer.MonObservable;
  *  - deconnecterUtilisateur, deconnecte l'utilisateur
  *  - estConnecte, d�terminer s'il y a un utilisateur connect�
  *  - obtenirTransactionsPourCompte, obtient la s�rie de transactions pour ce compte
- * 
+ *
  * Elle offre les services d'acc�s � la base de donn�es suivants:
  * 	-  verifier, autorisation de l'utilisateur
  * 	-  soumettreTransaction, soumets une transaction au syst�me
- * 
+ *
  * @author Fred Simard | ETS
  * @version H2025
  * @revision et commentaires Pierre B�lisle
@@ -39,8 +39,8 @@ public class Banque extends MonObservable{
 
 	// La banque en singleton.
 	private static Banque instance = new Banque();
-	
-    // �tat de la connexion entre le frontal et le dorsal.
+
+	// �tat de la connexion entre le frontal et le dorsal.
 	private boolean connecte = false;
 
 	/**
@@ -48,7 +48,7 @@ public class Banque extends MonObservable{
 	 * instancie et seed la Base de don��e
 	 */
 	private Banque() {
-		bd = new BaseDonnees();		
+		bd = new BaseDonnees();
 		SeedDB.seed(bd);
 	}
 
@@ -68,9 +68,9 @@ public class Banque extends MonObservable{
 	 */
 	public boolean verifier(String nomUtilisateur, String motDePasse) {
 		Utilisateur utilisateur = bd.obtenirUtilisateurParNom(nomUtilisateur);
-		
+
 		if(utilisateur != null) {
-			
+
 			System.out.println("v�rification de l'utilisateur");
 			System.out.println(utilisateur.toString());
 			return utilisateur.authentifier(nomUtilisateur, motDePasse);
@@ -86,7 +86,7 @@ public class Banque extends MonObservable{
 	public void soumettreTransaction(Transaction nouvelleTransaction) {
 		Utilisateur source;
 		Utilisateur destination;
-		
+
 		try {
 			// obtient le num�ro de compte source
 			source = bd.obtenirUtilisateurPourCompte(nouvelleTransaction.getNoCompteSource());
@@ -98,18 +98,18 @@ public class Banque extends MonObservable{
 			return;
 		}
 
-		// La destination et la source �gales ou � nulles, 
+		// La destination et la source �gales ou � nulles,
 		// on ne peut pas transiger.
 		if(source == null || destination==null || source.equals(destination)) {
 			nouvelleTransaction.setStatus(Transaction.REFUSE);
-			
-		// Il faut suffisament d'argent dans la source.
+
+			// Il faut suffisament d'argent dans la source.
 		}else {
-			
+
 			if(nouvelleTransaction.getMontant() > source.getSolde() || nouvelleTransaction.getMontant() <= 0) {
 				nouvelleTransaction.setStatus(Transaction.REFUSE);
-				
-			// Tout est beau, la transaction est affect�e et lea bd mise � jour.	
+
+				// Tout est beau, la transaction est affect�e et lea bd mise � jour.
 			}else {
 				System.out.println("Transaction accepte");
 				nouvelleTransaction.setStatus(Transaction.ACCEPTE);
@@ -130,15 +130,15 @@ public class Banque extends MonObservable{
 	/**
 	 * Permet d'obtenir un utilisateur actif � partir de son nom.
 	 * Les observateurs sont avis�s.
-	 * 
+	 *
 	 * @param nomUtilisateur Le nom de l'utilisateur actif voulu
 	 */
 	public void setUtilisateurActif(String nomUtilisateur) {
 		utilisateurActif = bd.obtenirUtilisateurParNom(nomUtilisateur);
-		
+
 		System.out.println("activation de l'utilisateur");
 		System.out.println(utilisateurActif);
-		
+
 		connecte = true;
 		this.avertirLesObservers();
 	}
@@ -147,7 +147,7 @@ public class Banque extends MonObservable{
 	 * Permet de rafraichir la r�f�rence de l'utilisateur actif de la banque.
 	 */
 	public void rafraichirUtilisateurActif() {
-		
+
 		if(utilisateurActif!=null) {
 			utilisateurActif = bd.obtenirUtilisateurParNom(utilisateurActif.getNomUtilisateur());
 		}
@@ -155,7 +155,7 @@ public class Banque extends MonObservable{
 
 	/**
 	 * Retourne la r�f�rence sur l'Utilisateur actif.
-	 * 
+	 *
 	 * @return L'utilisateur actif ou null si aucun.
 	 */
 	public Utilisateur getUtilisateurActif() {
@@ -181,13 +181,26 @@ public class Banque extends MonObservable{
 
 	/**
 	 * Retourne les transactions de l'utilisateur actif pour son num�ro de compte.
-	 * 
+	 *
 	 * @return Un Vector des transactions du compte de l'utilisateur actif.
 	 */
 	public Vector<Transaction> obtenirTransactionsPourCompte() {
 		return bd.obtenirTransactionsPourCompte(utilisateurActif.getNumeroDeCompte());
 	}
+	public boolean traiterTransaction(String compteDestination, double montant) {
+		if (utilisateurActif == null) return false;
+
+		Transaction nouvelleTransaction = new Transaction(
+				utilisateurActif.getNumeroDeCompte(),
+				compteDestination,
+				montant,
+				"" // Le statut sera défini dans soumettreTransaction()
+		);
+
+		soumettreTransaction(nouvelleTransaction);
+
+		// La méthode soumettreTransaction met à jour le statut
+		return Transaction.ACCEPTE.equals(nouvelleTransaction.getStatus());
+	}
+
 }
-
-
-
